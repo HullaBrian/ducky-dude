@@ -1,3 +1,0 @@
-/home/hullabrian/ducky-dude/cmake-build-debug/CMakeFiles/ducky_dude.dir
-/home/hullabrian/ducky-dude/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/hullabrian/ducky-dude/cmake-build-debug/CMakeFiles/rebuild_cache.dir
