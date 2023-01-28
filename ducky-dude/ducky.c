@@ -1,24 +1,38 @@
 #include <stdio.h>
 #include <libusb-1.0/libusb.h>
 #include <err.h>
+#include <string.h>
+#include "usb-scanner.h"
+#include "test.h"
+//#include "send-keys.h"
 
-int main() {
-    libusb_context *ctx = NULL;
-    libusb_device **list;
 
-    int init = libusb_init(&ctx);
-    if (init < 0) {
-        errx(1,"\n\nERROR: Cannot Initialize libusb\n\n");
+int main(int argc, char **argv) {
+    if (argc < 2){
+        printf("No parameters were given!");
+        return 1;
     }
 
-    ssize_t count = libusb_get_device_list(ctx, &list);
-    for (int i = 0; i < count; i++) {
-        libusb_device *device = list[i];
-        struct libusb_device_descriptor desc;
-        libusb_get_device_descriptor(device, &desc);
-        printf("Vendor ID: %04x, Product ID: %04x\n", desc.idVendor, desc.idProduct);
+    if (strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0){
+        printf("HELP!\n");
     }
-    libusb_free_device_list(list, 1);
-    libusb_exit(ctx);
+    else if (strcmp(argv[1], "--scan") == 0 || strcmp(argv[1], "-s") == 0){
+        scan();
+    }
+    else{
+        inject_2(*argv[1], *argv[2]);
+    }
+
+    int vendor_id;
+    int product_id;
+    for(int i = 0; argv[i]; i++){
+        if(strcmp(argv[i], "--vid") == 0 || strcmp(argv[i], "-v") == 0) {
+            sscanf(argv[i], "%x", &vendor_id);
+        }
+        else if (strcmp(argv[i], "--pid") == 0 || strcmp(argv[i], "-p") == 0) {
+            sscanf(argv[i], "%x", &product_id);
+        }
+    }
+
     return 0;
 }
