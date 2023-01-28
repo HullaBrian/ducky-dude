@@ -1,10 +1,16 @@
 #include <stdio.h>
 #include <libusb-1.0/libusb.h>
+#include <err.h>
 
 int main() {
     libusb_context *ctx = NULL;
     libusb_device **list;
-    libusb_init(&ctx);
+
+    int init = libusb_init(&ctx);
+    if (init < 0) {
+        errx(1,"\n\nERROR: Cannot Initialize libusb\n\n");
+    }
+
     ssize_t count = libusb_get_device_list(ctx, &list);
     for (int i = 0; i < count; i++) {
         libusb_device *device = list[i];
