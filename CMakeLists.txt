@@ -7,3 +7,6 @@ include_directories(ducky-dude)
 
 add_executable(ducky_dude
         ducky-dude/ducky.c)
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(libusb-1.0 REQUIRED libusb-1.0)
