@@ -6,6 +6,7 @@
 
 int inject_2(int VENDOR_ID, int PRODUCT_ID)
 {
+    printf("%x | %x", VENDOR_ID, PRODUCT_ID)
     libusb_device_handle* handle;
     int sent_bytes;
 
