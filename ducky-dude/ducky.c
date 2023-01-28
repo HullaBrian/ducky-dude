@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <libusb-1.0/libusb.h>
 #include <err.h>
+#include <inttypes.h>
 #include <string.h>
 #include "usb-scanner.h"
 #include "test.h"
@@ -23,14 +24,14 @@ int main(int argc, char **argv) {
         inject_2(*argv[1], *argv[2]);
     }
 
-    int vendor_id;
-    int product_id;
+    uint16_t vendor_id;
+    uint16_t product_id;
     for(int i = 0; argv[i]; i++){
         if(strcmp(argv[i], "--vid") == 0 || strcmp(argv[i], "-v") == 0) {
-            sscanf(argv[i], "%x", &vendor_id);
+            sscanf(argv[i], "%" SCNd16, &vendor_id);
         }
         else if (strcmp(argv[i], "--pid") == 0 || strcmp(argv[i], "-p") == 0) {
-            sscanf(argv[i], "%x", &product_id);
+            sscanf(argv[i], "%" SCNd16, &product_id);
         }
     }
 

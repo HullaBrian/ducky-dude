@@ -4,9 +4,9 @@
 // #define VENDOR_ID 0x1d34 // replace with your device's vendor ID
 // #define PRODUCT_ID 0x0013 // replace with your device's product ID
 
-int inject_2(int VENDOR_ID, int PRODUCT_ID)
+int inject_2(uint16_t VENDOR_ID, uint16_t PRODUCT_ID)
 {
-    printf("%x | %x", VENDOR_ID, PRODUCT_ID)
+    printf("%"SCNd16"|%"SCNd16 , VENDOR_ID, PRODUCT_ID);
     libusb_device_handle* handle;
     int sent_bytes;
 
