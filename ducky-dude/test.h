@@ -6,13 +6,20 @@
 
 int inject_2(uint16_t VENDOR_ID, uint16_t PRODUCT_ID)
 {
-    printf("%"SCNd16"|%"SCNd16 , VENDOR_ID, PRODUCT_ID);
-    libusb_device_handle* handle;
+    printf("[INJECTOR]: Preparing to inject keys...\n");
     int sent_bytes;
 
-    libusb_init(NULL);
+    printf("[INJECTOR]: Initializing usb device...\n");
+    libusb_device_handle* handle;
+    libusb_context *ctx = NULL;
+    int init = libusb_init(&ctx);
+    if (init < 0) {
+        errx(1,"\n\nERROR: Cannot Initialize libusb\n\n");
+    }
 
-    handle = libusb_open_device_with_vid_pid(NULL, VENDOR_ID, PRODUCT_ID);
+    printf("[INJECTOR]: Preparing to open usb connection with a vendor id of '" "%"SCNd16", and product id of '" "%"SCNd16 "'\n", VENDOR_ID, PRODUCT_ID);
+    handle = libusb_open_device_with_vid_pid(ctx, VENDOR_ID, PRODUCT_ID);
+    printf("[INJECTOR]: Initialized the usb device!\n");
 
     if (handle == NULL) {
         printf("Failed to open device.\n");
