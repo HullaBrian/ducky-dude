@@ -17,7 +17,9 @@ int inject_2(uint16_t VENDOR_ID, uint16_t PRODUCT_ID)
         errx(1,"\n\nERROR: Cannot Initialize libusb\n\n");
     }
 
-    printf("[INJECTOR]: Preparing to open usb connection with a vendor id of '" "%"SCNd16", and product id of '" "%"SCNd16 "'\n", VENDOR_ID, PRODUCT_ID);
+    printf("[INJECTOR]: Preparing to open usb connection with a vendor id of '" "%"SCNd16"', and product id of '" "%"SCNd16 "'\n", VENDOR_ID, PRODUCT_ID);
+    libusb_device **list;  // List for list of connected devices
+    libusb_get_device_list(ctx, &list);
     handle = libusb_open_device_with_vid_pid(ctx, VENDOR_ID, PRODUCT_ID);
     printf("[INJECTOR]: Initialized the usb device!\n");
 
@@ -32,7 +34,7 @@ int inject_2(uint16_t VENDOR_ID, uint16_t PRODUCT_ID)
 
     libusb_claim_interface(handle, 0);
 
-    // send key strokes here
+    // send key-strokes here
     char key_strokes[] = {'h','e','l','l','o',' ','w','o','r','l','d','!'};
     libusb_interrupt_transfer(handle, 0x01, key_strokes, sizeof(key_strokes), &sent_bytes, 0);
 
